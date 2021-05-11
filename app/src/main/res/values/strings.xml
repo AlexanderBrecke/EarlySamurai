@@ -1,6 +1,44 @@
 <resources>
     <string name="app_name">EarlySamurai</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_deals">Deals</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="cv">CV</string>
+
+    <!-- User strings -->
+    <string name="hey_user">Hey,</string>
+    <string name="about_user">About</string>
+    <string name="credibility_user">Credibility</string>
+    <string name="name_user">Name:</string>
+    <string name="sold_user_start">Sold</string>
+    <string name="ideas_user">ideas</string>
+    <string name="ideas_available_start">Has</string>
+    <string name="ideas_available_end">available</string>
+
+    <!-- Button strings -->
+    <string name="mini_pitch">See mini pitch</string>
+    <string name="book_meeting">Book meeting</string>
+    <string name="thank_you">Thank you, goodbye!</string>
+
+    <!-- Pitch strings -->
+    <string name="pitch">Mini pitch</string>
+
+    <!-- Booking strings -->
+    <string name="booking_firm">Firm:</string>
+    <string name="booking_message">Message:</string>
+
+    <!-- Loading strings -->
+    <string name="loading">Loading…</string>
+
+    <!--Tab strings-->
+    <string name="home_tab">HOME</string>
+    <string name="explore_tab">EXPLORE</string>
+    <string name="deals_tab">DEALS</string>
+    <string name="profile_tab">PROFILE</string>
+
+    <!-- Mock text -->
+    <string name="mock_fragment">This is a mock fragment</string>
+
 </resources>

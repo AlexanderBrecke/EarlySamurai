@@ -1,4 +1,4 @@
-package com.moonhaven.earlysamurai.ui.home
+package com.moonhaven.earlysamurai.ui.deals
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.moonhaven.earlysamurai.R
 
-class HomeFragment : Fragment() {
+class DealsFragment : Fragment() {
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -18,10 +17,9 @@ class HomeFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        textView.text = getString(R.string.mock_fragment)
-
+        val root = inflater.inflate(R.layout.fragment_deals, container, false)
+        val textView: TextView = root.findViewById(R.id.text_deals)
+        textView.text = getText(R.string.mock_fragment)
         return root
     }
 }

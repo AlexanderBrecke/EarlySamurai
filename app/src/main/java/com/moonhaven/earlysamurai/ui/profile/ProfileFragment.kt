@@ -17,7 +17,7 @@ class ProfileFragment: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         val textView: TextView = root.findViewById(R.id.text_profile)
-        textView.text = getText(R.string.mock_fragment)
+        textView.text = getText(R.string.profile_tab)
         return root
     }
 }

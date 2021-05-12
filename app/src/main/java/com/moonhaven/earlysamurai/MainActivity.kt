@@ -38,12 +38,13 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         navView.setOnNavigationItemSelectedListener {
             setCorrectLogo(it.title.toString())
+            navController.navigate(it.itemId)
             true
         }
     }
 
     // Function to set the correct logo according to the title
-    fun setCorrectLogo(title:String){
+    private fun setCorrectLogo(title:String){
         if(title == "HOME") headerBar.setRightLogoImage(R.drawable.logo_home)
         if(title == "EXPLORE") headerBar.setRightLogoImage(R.drawable.logo_explore)
         if(title == "DEALS") headerBar.setRightLogoImage(R.drawable.logo_deals)

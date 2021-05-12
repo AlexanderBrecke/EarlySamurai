@@ -4,6 +4,9 @@
     <string name="title_explore">Explore</string>
     <string name="title_deals">Deals</string>
     <string name="title_profile">Profile</string>
+    <string name="logo_image">Logo image</string>
+    <string name="logo_image_big">Logo image big</string>
+    <string name="logo_text">Logo text</string>
 
     <string name="cv">CV</string>
 

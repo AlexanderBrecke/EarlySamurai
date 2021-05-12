@@ -1,7 +1,5 @@
 package com.moonhaven.earlysamurai.ui.logo
 
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.view.View
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.header_bar.view.*
@@ -13,15 +11,12 @@ class HeaderBar(view: View) {
     private var logoImageRight:ImageView = view.logo_image_right
 
     init {
-
         hideMiddleLogo()
-
-
     }
 
     fun hideMiddleLogo(){
-        logoImageCenter.visibility = View.INVISIBLE
-        logoText.visibility = View.INVISIBLE
+        logoImageCenter.visibility = View.GONE
+        logoText.visibility = View.GONE
     }
 
     fun showMiddleLogo(){
@@ -30,7 +25,7 @@ class HeaderBar(view: View) {
     }
 
     fun hideRightLogo(){
-        logoImageRight.visibility = View.INVISIBLE
+        logoImageRight.visibility = View.GONE
     }
 
     fun showRightLogo(){
@@ -38,10 +33,8 @@ class HeaderBar(view: View) {
     }
 
     fun setRightLogoImage(imageToSetId:Int){
-
         logoImageRight.setImageResource(imageToSetId)
 
-//        logoImageRight.setImageDrawable(imageToSet)
     }
 
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,28 +9,33 @@
         android:id="@+id/logo_image_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/logo_image_margin_top"
+        android:layout_marginEnd="@dimen/logo_image_margin_right"
+        android:contentDescription="@string/logo_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/logo_image_margin_top"
-        android:layout_marginRight="@dimen/logo_image_margin_right"
         app:srcCompat="@drawable/logo_deals" />
 
     <ImageView
         android:id="@+id/logo_image_mid"
         android:layout_width="@dimen/logo_image_size_big"
         android:layout_height="@dimen/logo_image_size_big"
+        android:layout_marginTop="@dimen/logo_image_margin_top"
+        android:contentDescription="@string/logo_image_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/logo_image_margin_top"
-        app:srcCompat="@drawable/logo_orange" />
+        app:srcCompat="@drawable/logo_orange"
+        tools:visibility="gone" />
 
     <ImageView
         android:id="@+id/logo_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_image_mid"
-        app:srcCompat="@drawable/logo_text" />
+        app:srcCompat="@drawable/logo_text"
+        tools:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        textView.text = getString(R.string.mock_fragment)
+        textView.text = getString(R.string.home_tab)
 
         return root
     }

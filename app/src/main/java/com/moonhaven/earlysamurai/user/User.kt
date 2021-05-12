@@ -9,14 +9,15 @@ class User(
     private val userType:UserType,
     private var city:City,
     private var age:Int,
-    private var credibility:Double,
     private var category:Category,
-    private var ideas:MutableList<String> = mutableListOf(),
     private var quote:String? = null,
     private var pitch:String? = null,
 
     private var image:String? = null
     ) {
+
+    private val credibility:Double = 0.0
+    private val ideas:MutableList<String> = mutableListOf()
 
     fun getName():String{
         return name

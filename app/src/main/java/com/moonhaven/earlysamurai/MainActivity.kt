@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
         // Not using action bar, as we have our own action bar
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        navView.setupWithNavController(navController)
+        // Set listeners on item selected in the navigation menu to set the correct logo and navigate to correct fragment.
         navView.setOnNavigationItemSelectedListener {
             setCorrectLogo(it.title.toString())
-            navController.navigate(it.itemId)
-            true
+            false
         }
+        navView.setupWithNavController(navController)
     }
 
     // Function to set the correct logo according to the title

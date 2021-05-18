@@ -1,23 +1,34 @@
-package com.moonhaven.earlysamurai.user
+package com.moonhaven.earlysamurai.database
 
+import android.util.Log
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.moonhaven.earlysamurai.enums.Category
 import com.moonhaven.earlysamurai.enums.City
 import com.moonhaven.earlysamurai.enums.UserType
 
-class User(
+@Entity(tableName = "user_table")
+data class UserObject(
+    @PrimaryKey
+    private val id:String,
     private var name:String,
     private val userType:UserType,
     private var city:City,
     private var age:Int,
-    private var category:Category,
+    private var categories:MutableList<Category> = mutableListOf(),
+
     private var quote:String? = null,
     private var pitch:String? = null,
 
     private var image:String? = null
     ) {
 
-    private val credibility:Double = 0.0
-    private val ideas:MutableList<String> = mutableListOf()
+//    private var credibility:Double = 0.0
+
+
+    fun getId():String{
+        return id
+    }
 
     fun getName():String{
         return name
@@ -35,16 +46,12 @@ class User(
         return age
     }
 
-    fun getCredibility():Double{
-        return credibility
-    }
+//    fun getCredibility():Double{
+//        return credibility
+//    }
 
-    fun getCategory():Category{
-        return category
-    }
-
-    fun getIdeas():MutableList<String>{
-        return ideas
+    fun getCategories():MutableList<Category>{
+        return categories
     }
 
     fun getQuote():String?{

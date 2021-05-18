@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.moonhaven.earlysamurai.MainActivity
 import com.moonhaven.earlysamurai.R
 
 class ProfileFragment: Fragment() {
@@ -18,6 +19,7 @@ class ProfileFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         val textView: TextView = root.findViewById(R.id.text_profile)
         textView.text = getText(R.string.profile_tab)
+        (activity as MainActivity).setCorrectLogo(getString(R.string.profile_tab))
         return root
     }
 }

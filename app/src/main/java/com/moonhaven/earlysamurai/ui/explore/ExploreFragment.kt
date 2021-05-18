@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.moonhaven.earlysamurai.MainActivity
 import com.moonhaven.earlysamurai.R
 
 class ExploreFragment : Fragment() {
@@ -26,6 +27,7 @@ class ExploreFragment : Fragment() {
         exploreViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        (activity as MainActivity).setCorrectLogo(getString(R.string.explore_tab))
         return root
     }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.moonhaven.earlysamurai.MainActivity
 import com.moonhaven.earlysamurai.R
 
 class HomeFragment : Fragment() {
@@ -21,6 +22,7 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         textView.text = getString(R.string.home_tab)
+        (activity as MainActivity).setCorrectLogo(getString(R.string.home_tab))
 
         return root
     }

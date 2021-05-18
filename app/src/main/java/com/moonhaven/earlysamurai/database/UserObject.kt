@@ -1,6 +1,5 @@
 package com.moonhaven.earlysamurai.database
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.moonhaven.earlysamurai.enums.Category
@@ -16,15 +15,11 @@ data class UserObject(
     private var city:City,
     private var age:Int,
     private var categories:MutableList<Category> = mutableListOf(),
-
     private var quote:String? = null,
     private var pitch:String? = null,
-
-    private var image:String? = null
-    ) {
-
-//    private var credibility:Double = 0.0
-
+    private var image:String? = null,
+    private var credibility:Double = 0.0
+) {
 
     fun getId():String{
         return id
@@ -46,10 +41,6 @@ data class UserObject(
         return age
     }
 
-//    fun getCredibility():Double{
-//        return credibility
-//    }
-
     fun getCategories():MutableList<Category>{
         return categories
     }
@@ -64,6 +55,14 @@ data class UserObject(
 
     fun getImage():String?{
         return image
+    }
+
+    fun getCredibility():Double{
+        return credibility
+    }
+
+    fun updateCredibility(numberToUpdateWith:Double){
+        credibility += numberToUpdateWith
     }
 
 }

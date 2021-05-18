@@ -19,10 +19,6 @@ data class IdeaObject(
     constructor(userId: String, category: Category,status: IdeaStatus,ideaPitch: String):
             this(0,userId,category,status,ideaPitch)
 
-//    fun getUser(userId: String):User{
-//        //Logic to return the user with the userId
-//    }
-
     fun getId():Int{
         return id
     }

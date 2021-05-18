@@ -83,9 +83,9 @@ class MainActivity : AppCompatActivity() {
                 initializeIdeasMockData(ideaDAO)
             } else {
                 // Check, if not empty wipe database
-                if(emptyUserDb || emptyIdeaDb) Log.d("FOO", "Wiping the database..")
-                if(emptyUserDb) userDao.deleteAllUsers()
-                if(emptyIdeaDb) ideaDAO.deleteAllIdeas()
+                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
+                if(!emptyUserDb) userDao.deleteAllUsers()
+                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
             }
 
             // Logs for information

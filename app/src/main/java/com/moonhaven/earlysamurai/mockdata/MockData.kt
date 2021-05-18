@@ -1,5 +1,6 @@
 package com.moonhaven.earlysamurai.mockdata
 
+import android.util.Log
 import com.moonhaven.earlysamurai.database.IdeaObject
 import com.moonhaven.earlysamurai.database.UserObject
 import com.moonhaven.earlysamurai.enums.Category
@@ -16,6 +17,7 @@ class MockData (){
     private val user5 = UserObject("asdf5", "asdf5", UserType.Investor, City.Bergen, 42)
 
     val userList = mutableListOf(user1,user2,user3,user4,user5)
+
 
     private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,"asdf")
     private val idea2 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,"asdf")

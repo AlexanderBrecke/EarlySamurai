@@ -29,6 +29,7 @@ class UserListAdapter(
         holder.listItem.setUserText("${userObject.getName()}, ${userObject.getCity()} - CV")
 
         holder.listItem.setOnClickListener {
+            recyclerEventListener.onCellClickListener(dataset,position)
 //            Log.d("FOO", "Clicked ${userObject.getId()}")
         }
     }

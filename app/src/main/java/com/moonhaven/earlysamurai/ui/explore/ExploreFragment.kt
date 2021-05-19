@@ -1,6 +1,7 @@
 package com.moonhaven.earlysamurai.ui.explore
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,6 @@ class ExploreFragment : Fragment(), IRecyclerViewEventListener {
     }
 
     override fun onCellClickListener(userList: List<UserObject>, position: Int) {
-        TODO("Not yet implemented")
+        Log.d("FOO", "Pressed user with id: ${userList[position].getId()}")
     }
 }

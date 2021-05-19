@@ -33,11 +33,8 @@ class MainActivity : AppCompatActivity() {
         // set the tint of the nav view to null, as we use custom icons for the navigation menu
         navView.itemIconTintList = null
 
-        // normal setup of nav menu
+        // setup nav controller
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_explore, R.id.navigation_deals, R.id.navigation_profile))
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         // Hide the action bar as we use custom logo bar
@@ -46,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         //Initialize the header bar and set correct logo
         headerBar = HeaderBar(findViewById(R.id.main_header_bar))
         setCorrectLogo("HOME")
+        setHeaderBackArrowFunction()
 
         //Initialize mock data class and populateDatabase
         mockData = MockData()
@@ -55,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     // Function to set the correct logo according to the title
     fun setCorrectLogo(title:String){
+        hideBackArrowInHeaderBar()
         if(title == "HOME") headerBar.setRightLogoImage(R.drawable.logo_home)
         if(title == "EXPLORE") headerBar.setRightLogoImage(R.drawable.logo_explore)
         if(title == "DEALS") headerBar.setRightLogoImage(R.drawable.logo_deals)
@@ -62,6 +61,20 @@ class MainActivity : AppCompatActivity() {
         if(title == "big_logo"){
             headerBar.hideRightLogo()
             headerBar.showMiddleLogo()
+        }
+    }
+
+    fun showBackArrowInHeaderBar(){
+        headerBar.showBackArrow()
+    }
+
+    fun hideBackArrowInHeaderBar(){
+        headerBar.hideBackArrow()
+    }
+
+    fun setHeaderBackArrowFunction(){
+        headerBar.runWhenBackPressed {
+            onBackPressed()
         }
     }
 

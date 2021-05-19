@@ -38,4 +38,15 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_image_mid"
         app:srcCompat="@drawable/logo_text"
         tools:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        tools:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

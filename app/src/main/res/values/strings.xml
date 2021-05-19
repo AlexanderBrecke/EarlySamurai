@@ -2,8 +2,8 @@
     <string name="app_name">EarlySamurai</string>
     <string name="title_home">Home</string>
     <string name="title_explore">Explore</string>
-    <string name="title_deals">Deals</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_deals">DEALS</string>
+    <string name="title_profile">PROFILE</string>
     <string name="logo_image">Logo image</string>
     <string name="logo_image_big">Logo image big</string>
     <string name="logo_text">Logo text</string>
@@ -40,6 +40,9 @@
     <string name="explore_tab">EXPLORE</string>
     <string name="deals_tab">DEALS</string>
     <string name="profile_tab">PROFILE</string>
+
+    <!-- Explore strings -->
+    <string name="explore_top">Explore top rated users</string>
 
     <!-- Mock text -->
     <string name="mock_fragment">This is a mock fragment</string>

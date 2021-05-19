@@ -14,12 +14,12 @@ import androidx.room.*
     fun deleteAllUsers()
 
     @Query("SELECT * FROM user_table")
-    fun getAllUsers(): List<UserObject>?
+    fun getAllUsers(): List<UserObject>
 
     @Query("SELECT * FROM user_table LIMIT 1")
     fun getUser():UserObject?
 
     @Query("SELECT * FROM user_table WHERE id LIKE :userId")
-    fun getUserWithId(userId:String):UserObject?
+    fun getUserWithId(userId:String):UserObject
 
 }

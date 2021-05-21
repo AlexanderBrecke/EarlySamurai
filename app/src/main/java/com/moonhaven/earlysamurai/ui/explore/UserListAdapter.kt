@@ -26,7 +26,7 @@ class UserListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userObject = dataset[position]
 
-        holder.listItem.setUserText("${userObject.getName()}, ${userObject.getCity()} - CV")
+        holder.listItem.setUserText("${userObject.getFirstName()}, ${userObject.getCity()} - CV")
 
         holder.listItem.setOnClickListener {
             recyclerEventListener.onCellClickListener(dataset,position)

@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moonhaven.earlysamurai.MainActivity
@@ -43,8 +46,6 @@ class ExploreFragment : Fragment(), IRecyclerViewEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        recyclerAdapter = UserListAdapter(viewModel.getUsers(),this)
-
         initializeRecyclerView()
         bindObservers()
         viewModel.getUsers()
@@ -53,15 +54,8 @@ class ExploreFragment : Fragment(), IRecyclerViewEventListener {
 
     private fun bindObservers(){
         viewModel.usersLiveData.observe(viewLifecycleOwner, {
-
-            viewModel.getUsers()
             activity?.runOnUiThread{
-
                 recyclerAdapter.updateData(it)
-
-                // Here we would update the user adapter for the recycler view
-
-//                textView.text = "There are currently '${it.count()}' users in the database."
             }
         })
     }
@@ -76,6 +70,8 @@ class ExploreFragment : Fragment(), IRecyclerViewEventListener {
     }
 
     override fun onCellClickListener(userList: List<UserObject>, position: Int) {
-        Log.d("FOO", "Pressed user with id: ${userList[position].getId()}")
+        var bundle = Bundle()
+        bundle.putParcelable("user",userList[position])
+        (activity as MainActivity).findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_user_info,bundle)
     }
 }

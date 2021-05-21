@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         mockData = MockData()
         populateDatabase(true)
 
+    }
+
+    fun navigateToFragment(id:Int){
+        findNavController(R.id.nav_host_fragment).navigate(id)
     }
 
     // Function to set the correct logo according to the title

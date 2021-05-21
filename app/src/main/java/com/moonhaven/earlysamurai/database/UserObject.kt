@@ -1,16 +1,20 @@
 package com.moonhaven.earlysamurai.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.moonhaven.earlysamurai.enums.Category
 import com.moonhaven.earlysamurai.enums.City
 import com.moonhaven.earlysamurai.enums.UserType
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "user_table")
 data class UserObject(
     @PrimaryKey
     private val id:String,
-    private var name:String,
+    private var firstName:String,
+    private var lastName:String,
     private val userType:UserType,
     private var city:City,
     private var age:Int,
@@ -19,14 +23,18 @@ data class UserObject(
     private var pitch:String? = null,
     private var image:String? = null,
     private var credibility:Double = 0.0
-) {
+):Parcelable {
 
     fun getId():String{
         return id
     }
 
-    fun getName():String{
-        return name
+    fun getFirstName():String{
+        return firstName
+    }
+
+    fun getLastName():String{
+        return lastName
     }
 
     fun getUserType():UserType{

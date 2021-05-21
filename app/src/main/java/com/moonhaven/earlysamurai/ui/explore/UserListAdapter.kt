@@ -12,7 +12,7 @@ import com.moonhaven.earlysamurai.ui.custom.CustomUserCard
 
 
 class UserListAdapter(
-    var dataset:List<UserObject>,
+    private var dataset:List<UserObject>,
     private val recyclerEventListener: IRecyclerViewEventListener):RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
 
@@ -30,7 +30,6 @@ class UserListAdapter(
 
         holder.listItem.setOnClickListener {
             recyclerEventListener.onCellClickListener(dataset,position)
-//            Log.d("FOO", "Clicked ${userObject.getId()}")
         }
     }
 
@@ -44,8 +43,5 @@ class UserListAdapter(
     }
 
     inner class ViewHolder(val listItem: CustomUserCard):RecyclerView.ViewHolder(listItem)
-
-
-
 
 }

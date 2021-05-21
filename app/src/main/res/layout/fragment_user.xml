@@ -23,10 +23,10 @@
         app:layout_constraintEnd_toStartOf="@+id/credibility_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_user_text_view"
-        android:layout_marginLeft="@dimen/margin_bigger"
+        android:layout_marginLeft="@dimen/margin_big"
         android:src="@mipmap/ic_launcher"
         tools:srcCompat="@tools:sample/avatars"
-        android:layout_marginTop="@dimen/margin_big"/>
+        android:layout_marginTop="@dimen/margin_medium"/>
 
     <TextView
         android:id="@+id/credibility_text_view"
@@ -40,52 +40,52 @@
 
     <ImageView
         android:id="@+id/profile_icon_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         app:layout_constraintTop_toBottomOf="@id/profile_picture"
         app:layout_constraintStart_toStartOf="@id/profile_picture"
-        android:layout_marginTop="@dimen/margin_big"
-        android:src="@drawable/home_tab"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:src="@drawable/flower"
         />
 
     <ImageView
         android:id="@+id/profile_icon_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         app:layout_constraintTop_toBottomOf="@id/profile_icon_1"
         app:layout_constraintStart_toStartOf="@id/profile_picture"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:src="@drawable/home_tab"
+        android:layout_marginTop="@dimen/margin_small"
+        android:src="@drawable/flower"
         />
 
     <ImageView
         android:id="@+id/profile_icon_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         app:layout_constraintTop_toBottomOf="@id/profile_icon_2"
         app:layout_constraintStart_toStartOf="@id/profile_picture"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:src="@drawable/home_tab"
+        android:layout_marginTop="@dimen/margin_small"
+        android:src="@drawable/flower"
         />
 
     <ImageView
         android:id="@+id/profile_icon_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         app:layout_constraintTop_toBottomOf="@id/profile_icon_3"
         app:layout_constraintStart_toStartOf="@id/profile_picture"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:src="@drawable/home_tab"
+        android:layout_marginTop="@dimen/margin_small"
+        android:src="@drawable/flower"
         />
 
     <ImageView
         android:id="@+id/profile_icon_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         app:layout_constraintTop_toBottomOf="@id/profile_icon_4"
         app:layout_constraintStart_toStartOf="@id/profile_picture"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:src="@drawable/home_tab"
+        android:layout_marginTop="@dimen/margin_small"
+        android:src="@drawable/flower"
         />
 
     <TextView
@@ -96,18 +96,18 @@
         app:layout_constraintTop_toTopOf="@id/profile_icon_1"
         app:layout_constraintBottom_toBottomOf="@id/profile_icon_1"
         android:textSize="@dimen/user_info_text_size"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_tiny"
         />
 
     <TextView
-        android:id="@+id/ideas_info_textView"
+        android:id="@+id/ideas_sold_info_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/profile_icon_2"
         app:layout_constraintTop_toTopOf="@id/profile_icon_2"
         app:layout_constraintBottom_toBottomOf="@id/profile_icon_2"
         android:textSize="@dimen/user_info_text_size"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_tiny"
         />
 
     <TextView
@@ -118,7 +118,7 @@
         app:layout_constraintTop_toTopOf="@id/profile_icon_3"
         app:layout_constraintBottom_toBottomOf="@id/profile_icon_3"
         android:textSize="@dimen/user_info_text_size"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_tiny"
         />
 
     <TextView
@@ -129,7 +129,7 @@
         app:layout_constraintTop_toTopOf="@id/profile_icon_4"
         app:layout_constraintBottom_toBottomOf="@id/profile_icon_4"
         android:textSize="@dimen/user_info_text_size"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_tiny"
         />
 
     <TextView
@@ -140,15 +140,15 @@
         app:layout_constraintTop_toTopOf="@id/profile_icon_5"
         app:layout_constraintBottom_toBottomOf="@id/profile_icon_5"
         android:textSize="@dimen/user_info_text_size"
-        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginLeft="@dimen/margin_tiny"
         />
 
     <Button
         android:id="@+id/mini_pitch_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_big"
-        android:layout_marginLeft="@dimen/margin_big"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
         android:text="@string/mini_pitch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toLeftOf="@id/book_meeting_button"
@@ -158,7 +158,7 @@
         android:id="@+id/book_meeting_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_big"
+        android:layout_marginRight="@dimen/margin_medium"
         android:text="@string/book_meeting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/mini_pitch_button"

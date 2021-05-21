@@ -52,10 +52,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToFragment(id:Int){
-        findNavController(R.id.nav_host_fragment).navigate(id)
-    }
-
     // Function to set the correct logo according to the title
     fun setCorrectLogo(title:String){
         hideBackArrowInHeaderBar()

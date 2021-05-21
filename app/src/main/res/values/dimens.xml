@@ -4,10 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Margin dimens -->
-    <dimen name="margin_small">8dp</dimen>
-    <dimen name="margin_medium">16dp</dimen>
-    <dimen name="margin_big">32dp</dimen>
-    <dimen name="margin_bigger">64dp</dimen>
+    <dimen name="margin_tiny">8dp</dimen>
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_big">64dp</dimen>
 
     <!-- Logo dimens -->
     <dimen name="logo_image_size_big">80dp</dimen>
@@ -18,6 +18,9 @@
     <dimen name="card_text_size">16sp</dimen>
 
     <!-- User info dimens -->
-    <dimen name="user_info_text_size">20sp</dimen>
-    <dimen name="about_text_size">22sp</dimen>
+    <dimen name="user_info_text_size">16sp</dimen>
+    <dimen name="about_text_size">26sp</dimen>
+
+    <!-- Icon dimens -->
+    <dimen name="icon_size">24dp</dimen>
 </resources>

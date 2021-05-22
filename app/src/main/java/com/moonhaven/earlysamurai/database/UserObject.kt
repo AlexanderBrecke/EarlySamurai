@@ -8,6 +8,7 @@ import com.moonhaven.earlysamurai.enums.City
 import com.moonhaven.earlysamurai.enums.UserType
 import kotlinx.android.parcel.Parcelize
 
+// Parcelized data entity for user object
 @Parcelize
 @Entity(tableName = "user_table")
 data class UserObject(
@@ -24,6 +25,9 @@ data class UserObject(
     private var image:String? = null,
     private var credibility:Double = 0.0
 ):Parcelable {
+
+    // --- Functions to get the values from the object as values are private ---
+        // Same as IdeaObject, here we would normally have functions to set values if they should be able to change.
 
     fun getId():String{
         return id
@@ -69,8 +73,6 @@ data class UserObject(
         return credibility
     }
 
-    fun updateCredibility(numberToUpdateWith:Double){
-        credibility += numberToUpdateWith
-    }
+    // --- ---
 
 }

@@ -1,25 +1,22 @@
 package com.moonhaven.earlysamurai.ui.explore
 
-import android.content.Context
-import android.util.Log
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.moonhaven.earlysamurai.EarlySamuraiApplication
 import com.moonhaven.earlysamurai.database.UserObject
 import com.moonhaven.earlysamurai.interfaces.IRecyclerViewEventListener
 import com.moonhaven.earlysamurai.ui.custom.CustomUserCard
 
-
+// Logic for the adapter to show users in recycler view
 class UserListAdapter(
     private var dataset:List<UserObject>,
     private val recyclerEventListener: IRecyclerViewEventListener):RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
+        // Initialize the list item for our view holder. Make it an instance of the custom user card.
         val listItem = CustomUserCard(parent.context)
 
+        // Return the view holder and give it the list item initialized
         return ViewHolder(listItem)
     }
 
@@ -42,6 +39,7 @@ class UserListAdapter(
         notifyDataSetChanged()
     }
 
+    // Class to set the custom user card as the view holder
     inner class ViewHolder(val listItem: CustomUserCard):RecyclerView.ViewHolder(listItem)
 
 }

@@ -19,15 +19,14 @@ import com.moonhaven.earlysamurai.enums.IdeaStatus
 import com.moonhaven.earlysamurai.viewmodels.IdeasViewModel
 import kotlinx.android.synthetic.main.fragment_user.view.*
 
-
+// Logic class for the user fragment
 class UserFragment:Fragment() {
 
+    // Setup values for the view model, user object, arbitrary value for sold ideas and all views
     private lateinit var viewModel:IdeasViewModel
 
     private var user: UserObject? = null
-
     private var soldIdeas:Int = 0
-    
 
     private lateinit var aboutTitleTextView:TextView
     private lateinit var profileImageView:ImageView
@@ -44,11 +43,14 @@ class UserFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        // Initialize the view model and the fragment view
         viewModel = ViewModelProvider(this).get(IdeasViewModel::class.java)
         val root = inflater.inflate(layout.fragment_user, container, false)
 
+        // Get the user object from the bundle
         user = arguments?.getParcelable("user")
 
+        // Initialize views
         aboutTitleTextView = root.about_user_text_view
         profileImageView = root.profile_picture
         credibilityTextView = root.credibility_text_view
@@ -58,30 +60,35 @@ class UserFragment:Fragment() {
         ideasAvailableTextView = root.ideas_available_textView
         quoteTextView = root.quote_textView
 
-
-
+        // Return the fragment view
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Show the back arrow in the header bar
         (activity as MainActivity).showBackArrowInHeaderBar()
+
+        // Make sure we have a user object
         user?.let {
-            viewModel.getUserIdeas(it.getId())
+            // Bind the observers for view models and fetch information
             bindObservers()
+            viewModel.getUserIdeas(it.getId())
         }
-
-
     }
 
+    // Bind the view model observers
     private fun bindObservers(){
+        // Observe the live data for user ideas
         viewModel.userIdeasLiveData.observe(viewLifecycleOwner, {
+            // set the value for how many sold ideas the user have, then fill information to the views
             soldIdeas = getSoldIdeasCount(it)
             fillOutUserInformation()
         })
     }
 
+    // Function to set the values of views with information from the user
     @SuppressLint("SetTextI18n")
     private fun fillOutUserInformation(){
         aboutTitleTextView.text = "${getString(string.about_user)} ${user?.getFirstName()}"
@@ -89,6 +96,7 @@ class UserFragment:Fragment() {
         userInfoTextView.text = "${getString(string.name_user)} ${user?.getFirstName()}"
         ideasSoldInfoTextView.text = "${getString(string.sold_user_start)} $soldIdeas ${getString(string.ideas_user)}"
 
+        // loop in case we have more than one category
         var categories:String = ""
         user?.let {
             var i = 0
@@ -104,6 +112,7 @@ class UserFragment:Fragment() {
         quoteTextView.text = user?.getQuote()
     }
 
+    // Function to get the number of sold ideas by the user
     private fun getSoldIdeasCount(allIdeas:List<IdeaObject>):Int{
         var count = 0
         for(idea in allIdeas){

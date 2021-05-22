@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.moonhaven.earlysamurai.database.AppDatabase
 import com.moonhaven.earlysamurai.database.IdeaDAO
 import com.moonhaven.earlysamurai.database.UserDAO
 import com.moonhaven.earlysamurai.mockdata.MockData
-import com.moonhaven.earlysamurai.ui.logo.HeaderBar
+import com.moonhaven.earlysamurai.ui.custom.CustomHeaderBar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +18,9 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var headerBar:HeaderBar
+    private lateinit var headerBar: CustomHeaderBar
+
+    private lateinit var database:AppDatabase
     private lateinit var mockData:MockData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,18 +40,21 @@ class MainActivity : AppCompatActivity() {
         // Hide the action bar as we use custom logo bar
         supportActionBar?.hide()
 
-        //Initialize the header bar and set correct logo
-        headerBar = HeaderBar(findViewById(R.id.main_header_bar))
+        //Initialize the header bar and set correct logo and the function for back arrow
+        headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
         setCorrectLogo("HOME")
         setHeaderBackArrowFunction()
 
-        //Initialize mock data class and populateDatabase
+        //Initialize the database and mock data class, then populate database
+        database = AppDatabase.getDatabase(this@MainActivity)
+
         mockData = MockData()
-        populateDatabase(true)
+        mockData.populateDatabase(database,true)
 
     }
 
-    // Function to set the correct logo according to the title
+    // --- Functions to manipulate the header bar ---
+
     fun setCorrectLogo(title:String){
         hideBackArrowInHeaderBar()
         if(title == "HOME") headerBar.setRightLogoImage(R.drawable.logo_home)
@@ -79,57 +81,59 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Database initialization with mock data
-    private fun populateDatabase(populate:Boolean){
-        CoroutineScope(Dispatchers.IO).launch {
+    // --- ---
 
-            //Initialize DAOs
-            val userDao = AppDatabase.getDatabase(this@MainActivity).userDAO()
-            val ideaDAO = AppDatabase.getDatabase(this@MainActivity).ideaDAO()
-
-            // Values to not have to write too many times
-            val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
-            val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
-
-            //If we are supposed to populate the database
-            if(populate){
-                initializeUserMockData(userDao)
-                initializeIdeasMockData(ideaDAO)
-            } else {
-                // Check, if not empty wipe database
-                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
-                if(!emptyUserDb) userDao.deleteAllUsers()
-                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
-            }
-
-            // Logs for information
-            if(userDao.getAllUsers().isNullOrEmpty()) Log.d("FOO", "Currently 0 users in database")
-            else Log.d("FOO", "Currently ${userDao.getAllUsers()?.size} users in database \n ${userDao.getAllUsers().toString()}")
-
-            if(ideaDAO.getAllIdeas().isNullOrEmpty()) Log.d("FOO", "Currently 0 ideas in database")
-            else Log.d("FOO", "Currently ${ideaDAO.getAllIdeas()?.size} ideas in database \n ${ideaDAO.getAllIdeas().toString()}")
-        }
-    }
-
-    // Function to initialize user mock data
-    private fun initializeUserMockData(userDao: UserDAO){
-        if(userDao.getAllUsers().isNullOrEmpty()){
-            Log.d("FOO","Populating users..")
-            for(user in mockData.userList) {
-                userDao.insertUser(user)
-            }
-            Log.d("FOO", "Added: '${mockData.userList.size}' users to the database")
-        }
-    }
-
-    // Function to initialize idea mock data
-    private fun initializeIdeasMockData(ideaDao:IdeaDAO){
-        if(ideaDao.getAllIdeas().isNullOrEmpty()){
-            Log.d("FOO","Populating ideas..")
-            for(idea in mockData.ideaList){
-                ideaDao.insertIdea(idea)
-            }
-            Log.d("FOO", "Added: '${mockData.ideaList.size}' ideas to the database")
-        }
-    }
+//    //Database initialization with mock data
+//    private fun populateDatabase(populate:Boolean){
+//        CoroutineScope(Dispatchers.IO).launch {
+//
+//            //Initialize DAOs
+//            val userDao = database.userDAO()
+//            val ideaDAO = database.ideaDAO()
+//
+//            // Values to not have to write too many times
+//            val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
+//            val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
+//
+//            //If we are supposed to populate the database
+//            if(populate){
+//                initializeUserMockData(userDao)
+//                initializeIdeasMockData(ideaDAO)
+//            } else {
+//                // Check, if not empty wipe database
+//                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
+//                if(!emptyUserDb) userDao.deleteAllUsers()
+//                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
+//            }
+//
+//            // Logs for information
+//            if(userDao.getAllUsers().isNullOrEmpty()) Log.d("FOO", "Currently 0 users in database")
+//            else Log.d("FOO", "Currently ${userDao.getAllUsers()?.size} users in database \n ${userDao.getAllUsers().toString()}")
+//
+//            if(ideaDAO.getAllIdeas().isNullOrEmpty()) Log.d("FOO", "Currently 0 ideas in database")
+//            else Log.d("FOO", "Currently ${ideaDAO.getAllIdeas()?.size} ideas in database \n ${ideaDAO.getAllIdeas().toString()}")
+//        }
+//    }
+//
+//    // Function to initialize user mock data
+//    private fun initializeUserMockData(userDao: UserDAO){
+//        if(userDao.getAllUsers().isNullOrEmpty()){
+//            Log.d("FOO","Populating users..")
+//            for(user in mockData.userList) {
+//                userDao.insertUser(user)
+//            }
+//            Log.d("FOO", "Added: '${mockData.userList.size}' users to the database")
+//        }
+//    }
+//
+//    // Function to initialize idea mock data
+//    private fun initializeIdeasMockData(ideaDao:IdeaDAO){
+//        if(ideaDao.getAllIdeas().isNullOrEmpty()){
+//            Log.d("FOO","Populating ideas..")
+//            for(idea in mockData.ideaList){
+//                ideaDao.insertIdea(idea)
+//            }
+//            Log.d("FOO", "Added: '${mockData.ideaList.size}' ideas to the database")
+//        }
+//    }
 }

@@ -1,11 +1,14 @@
 package com.moonhaven.earlysamurai.mockdata
 
-import com.moonhaven.earlysamurai.database.IdeaObject
-import com.moonhaven.earlysamurai.database.UserObject
+import android.util.Log
+import com.moonhaven.earlysamurai.database.*
 import com.moonhaven.earlysamurai.enums.Category
 import com.moonhaven.earlysamurai.enums.City
 import com.moonhaven.earlysamurai.enums.IdeaStatus
 import com.moonhaven.earlysamurai.enums.UserType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MockData{
 
@@ -30,5 +33,60 @@ class MockData{
     private val idea6 = IdeaObject("asdf4",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
 
     val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6)
+
+    //Database initialization with mock data
+    fun populateDatabase(database:AppDatabase,populate:Boolean){
+        CoroutineScope(Dispatchers.IO).launch {
+
+            //Initialize DAOs
+            val userDao = database.userDAO()
+            val ideaDAO = database.ideaDAO()
+
+            // Values to not have to write too many times
+            val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
+            val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
+
+            //If we are supposed to populate the database
+            if(populate){
+                initializeUserMockData(userDao)
+                initializeIdeasMockData(ideaDAO)
+            } else {
+                // Check, if not empty wipe database
+                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
+                if(!emptyUserDb) userDao.deleteAllUsers()
+                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
+            }
+
+            // Logs for information
+            if(userDao.getAllUsers().isNullOrEmpty()) Log.d("FOO", "Currently 0 users in database")
+            else Log.d("FOO", "Currently ${userDao.getAllUsers()?.size} users in database \n ${userDao.getAllUsers().toString()}")
+
+            if(ideaDAO.getAllIdeas().isNullOrEmpty()) Log.d("FOO", "Currently 0 ideas in database")
+            else Log.d("FOO", "Currently ${ideaDAO.getAllIdeas()?.size} ideas in database \n ${ideaDAO.getAllIdeas().toString()}")
+        }
+    }
+
+    // Function to initialize user mock data
+    private fun initializeUserMockData(userDao: UserDAO){
+        if(userDao.getAllUsers().isNullOrEmpty()){
+            Log.d("FOO","Populating users..")
+            for(user in userList) {
+                userDao.insertUser(user)
+            }
+            Log.d("FOO", "Added: '${userList.size}' users to the database")
+        }
+    }
+
+    // Function to initialize idea mock data
+    private fun initializeIdeasMockData(ideaDao: IdeaDAO){
+        if(ideaDao.getAllIdeas().isNullOrEmpty()){
+            Log.d("FOO","Populating ideas..")
+            for(idea in ideaList){
+                ideaDao.insertIdea(idea)
+            }
+            Log.d("FOO", "Added: '${ideaList.size}' ideas to the database")
+        }
+    }
+
 }
 

@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.moonhaven.earlysamurai.MainActivity
+import com.moonhaven.earlysamurai.MeetingActivity
 import com.moonhaven.earlysamurai.R
 import com.moonhaven.earlysamurai.R.*
 import com.moonhaven.earlysamurai.database.IdeaObject
@@ -37,6 +39,9 @@ class UserFragment:Fragment() {
     private lateinit var ideasAvailableTextView: TextView
     private lateinit var quoteTextView: TextView
 
+    private lateinit var miniPitchButton: Button
+    private lateinit var bookButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +65,9 @@ class UserFragment:Fragment() {
         ideasAvailableTextView = root.ideas_available_textView
         quoteTextView = root.quote_textView
 
+        miniPitchButton = root.mini_pitch_button
+        bookButton = root.book_meeting_button
+
         // Return the fragment view
         return root
     }
@@ -70,11 +78,26 @@ class UserFragment:Fragment() {
         // Show the back arrow in the header bar
         (activity as MainActivity).showBackArrowInHeaderBar()
 
+        // Set click listeners for buttons
+        setClickListeners()
+
         // Make sure we have a user object
         user?.let {
             // Bind the observers for view models and fetch information
             bindObservers()
             viewModel.getUserIdeas(it.getId())
+        }
+    }
+
+    // Set click listeners on mini pitch and book meeting buttons
+    private fun setClickListeners(){
+        miniPitchButton.setOnClickListener{
+            Log.d("FOO", "Pressed the 'see mini pitch button'")
+        }
+
+        bookButton.setOnClickListener {
+            Log.d("FOO", "Pressed the 'book meeting button'")
+            (activity as MainActivity).startNewActivity(MeetingActivity())
         }
     }
 

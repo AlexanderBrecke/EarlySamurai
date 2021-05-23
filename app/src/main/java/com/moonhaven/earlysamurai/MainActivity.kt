@@ -1,5 +1,7 @@
 package com.moonhaven.earlysamurai
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -83,57 +85,9 @@ class MainActivity : AppCompatActivity() {
 
     // --- ---
 
-//    //Database initialization with mock data
-//    private fun populateDatabase(populate:Boolean){
-//        CoroutineScope(Dispatchers.IO).launch {
-//
-//            //Initialize DAOs
-//            val userDao = database.userDAO()
-//            val ideaDAO = database.ideaDAO()
-//
-//            // Values to not have to write too many times
-//            val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
-//            val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
-//
-//            //If we are supposed to populate the database
-//            if(populate){
-//                initializeUserMockData(userDao)
-//                initializeIdeasMockData(ideaDAO)
-//            } else {
-//                // Check, if not empty wipe database
-//                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
-//                if(!emptyUserDb) userDao.deleteAllUsers()
-//                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
-//            }
-//
-//            // Logs for information
-//            if(userDao.getAllUsers().isNullOrEmpty()) Log.d("FOO", "Currently 0 users in database")
-//            else Log.d("FOO", "Currently ${userDao.getAllUsers()?.size} users in database \n ${userDao.getAllUsers().toString()}")
-//
-//            if(ideaDAO.getAllIdeas().isNullOrEmpty()) Log.d("FOO", "Currently 0 ideas in database")
-//            else Log.d("FOO", "Currently ${ideaDAO.getAllIdeas()?.size} ideas in database \n ${ideaDAO.getAllIdeas().toString()}")
-//        }
-//    }
-//
-//    // Function to initialize user mock data
-//    private fun initializeUserMockData(userDao: UserDAO){
-//        if(userDao.getAllUsers().isNullOrEmpty()){
-//            Log.d("FOO","Populating users..")
-//            for(user in mockData.userList) {
-//                userDao.insertUser(user)
-//            }
-//            Log.d("FOO", "Added: '${mockData.userList.size}' users to the database")
-//        }
-//    }
-//
-//    // Function to initialize idea mock data
-//    private fun initializeIdeasMockData(ideaDao:IdeaDAO){
-//        if(ideaDao.getAllIdeas().isNullOrEmpty()){
-//            Log.d("FOO","Populating ideas..")
-//            for(idea in mockData.ideaList){
-//                ideaDao.insertIdea(idea)
-//            }
-//            Log.d("FOO", "Added: '${mockData.ideaList.size}' ideas to the database")
-//        }
-//    }
+    fun startNewActivity(activityToStart:AppCompatActivity){
+        val intent = Intent(this, activityToStart::class.java)
+        startActivity(intent)
+    }
+
 }

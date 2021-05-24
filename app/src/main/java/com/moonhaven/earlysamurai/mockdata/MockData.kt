@@ -22,7 +22,7 @@ class MockData{
     private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsum)
     private val user5 = UserObject("asdf5", "FirstName5","LastName", UserType.Investor, City.Bergen, 42)
 
-    val userList = mutableListOf(user1,user2,user3,user4,user5)
+    private val userList = mutableListOf(user1,user2,user3,user4,user5)
 
 
     private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
@@ -32,7 +32,7 @@ class MockData{
     private val idea5 = IdeaObject("asdf3",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea6 = IdeaObject("asdf4",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
 
-    val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6)
+    private val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6)
 
     //Database initialization with mock data
     fun populateDatabase(database:AppDatabase,populate:Boolean){

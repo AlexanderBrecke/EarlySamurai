@@ -31,8 +31,8 @@
 
     <fragment
         android:id="@+id/navigation_user_info"
-        android:name="com.moonhaven.earlysamurai.ui.user.UserFragment"
-        tools:layout="@layout/fragment_user"
+        android:name="com.moonhaven.earlysamurai.ui.about.AboutFragment"
+        tools:layout="@layout/fragment_about"
         >
         <argument
             android:name="user"

@@ -8,6 +8,7 @@
     <dimen name="margin_small">16dp</dimen>
     <dimen name="margin_medium">32dp</dimen>
     <dimen name="margin_big">64dp</dimen>
+    <dimen name="margin_huge">128dp</dimen>
 
     <!-- Logo dimens -->
     <dimen name="logo_image_size_big">80dp</dimen>

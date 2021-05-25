@@ -33,7 +33,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/user_card_icon"
+                app:layout_constraintEnd_toStartOf="@+id/icon"
                 android:layout_marginRight="@dimen/margin_small"
                 android:layout_marginLeft="@dimen/margin_small"
                 android:gravity="left"
@@ -41,7 +41,7 @@
                 android:textSize="@dimen/card_text_size" />
 
             <ImageView
-                android:id="@+id/user_card_icon"
+                android:id="@+id/icon"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 app:layout_constraintEnd_toEndOf="parent"

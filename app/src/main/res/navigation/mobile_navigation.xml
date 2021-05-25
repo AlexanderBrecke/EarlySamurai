@@ -39,4 +39,10 @@
             app:argType="com.moonhaven.earlysamurai.database.UserObject"
             app:nullable="false" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="com.moonhaven.earlysamurai.ui.booking.BookingFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_book" />
 </navigation>

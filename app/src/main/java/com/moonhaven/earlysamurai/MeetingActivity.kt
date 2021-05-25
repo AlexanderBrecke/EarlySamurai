@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -28,7 +29,8 @@ class MeetingActivity:AppCompatActivity() {
     private lateinit var cameraPreview:CameraPreview
     private lateinit var cameraExecutor: ExecutorService
 
-    private lateinit var hideCameraButton: Button
+    private lateinit var showCameraButton:ImageView
+    private lateinit var hideCameraButton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,9 @@ class MeetingActivity:AppCompatActivity() {
         supportActionBar?.hide()
 
         headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
-        hideCameraButton = hide_camera_button
+
+        showCameraButton = activate_camera_icon
+        hideCameraButton = deactivate_camera_icon
 
         setCorrectLogo()
         setClickListeners()
@@ -64,6 +68,11 @@ class MeetingActivity:AppCompatActivity() {
         hideCameraButton.setOnClickListener {
             current_user_camera_preview.visibility = View.GONE
             current_user_profile_picture.visibility = View.VISIBLE
+        }
+
+        showCameraButton.setOnClickListener{
+            current_user_profile_picture.visibility = View.GONE
+            current_user_camera_preview.visibility = View.VISIBLE
         }
     }
 

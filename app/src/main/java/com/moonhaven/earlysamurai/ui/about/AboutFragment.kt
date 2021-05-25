@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.moonhaven.earlysamurai.MainActivity
+import com.moonhaven.earlysamurai.R
 import com.moonhaven.earlysamurai.R.*
 import com.moonhaven.earlysamurai.database.IdeaObject
 import com.moonhaven.earlysamurai.database.UserObject
@@ -29,7 +31,7 @@ class AboutFragment:Fragment() {
     // Setup values for the view model, user object, arbitrary value for sold ideas and all views
     private lateinit var viewModel:IdeasViewModel
 
-    private var currentState:AboutFragmentState = AboutFragmentState.Info
+    private lateinit var currentState:AboutFragmentState
 
     private var user: UserObject? = null
     private var soldIdeas:Int = 0
@@ -61,6 +63,9 @@ class AboutFragment:Fragment() {
 
         // Get the user object from the bundle
         user = arguments?.getParcelable("user")
+
+        // Set the current state
+        currentState = AboutFragmentState.Info
 
         // Initialize views
         aboutTitle = root.about_user_text_view
@@ -106,11 +111,12 @@ class AboutFragment:Fragment() {
         }
 
         bookButton.setOnClickListener {
-            (activity as MainActivity).startNewActivity(SplashActivity())
+            (activity as MainActivity).findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_booking)
         }
 
         bookButton2.setOnClickListener {
-            (activity as MainActivity).startNewActivity(SplashActivity())
+            (activity as MainActivity).findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_booking)
+            onStateChanged(currentState)
         }
     }
 

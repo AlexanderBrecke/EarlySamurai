@@ -14,15 +14,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="8dp"
-        app:contentPaddingLeft="24dp"
-        app:contentPaddingRight="24dp"
-        app:contentPadding="12dp">
+
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/border_rounded"
+            android:padding="@dimen/margin_small"
+            android:paddingLeft="@dimen/margin_medium"
+
+            >
 
             <TextView
                 android:id="@+id/user_card_text"

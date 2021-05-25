@@ -16,10 +16,10 @@ class MockData{
     private val loremIpsumShort = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id sagittis nulla."
     private val quote1 = "It's fucked"
 
-    private val user1 = UserObject("asdf1", "FirstName1","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment, Category.Finance, Category.Medicine),quote1,loremIpsum)
-    private val user2 = UserObject("asdf2", "FirstName2","LastName", UserType.Entrepreneur, City.Oslo, 42, mutableListOf(Category.Environment),quote1,loremIpsum)
-    private val user3 = UserObject("asdf3", "FirstName3","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment),quote1,loremIpsum)
-    private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsum)
+    private val user1 = UserObject("asdf1", "FirstName1","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment, Category.Finance, Category.Medicine),quote1,loremIpsumShort)
+    private val user2 = UserObject("asdf2", "FirstName2","LastName", UserType.Entrepreneur, City.Oslo, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
+    private val user3 = UserObject("asdf3", "FirstName3","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
+    private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsumShort)
     private val user5 = UserObject("asdf5", "FirstName5","LastName", UserType.Investor, City.Bergen, 42)
 
     private val userList = mutableListOf(user1,user2,user3,user4,user5)

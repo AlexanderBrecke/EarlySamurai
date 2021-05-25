@@ -2,7 +2,6 @@ package com.moonhaven.earlysamurai.ui.about
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,16 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.moonhaven.earlysamurai.MainActivity
-import com.moonhaven.earlysamurai.MeetingActivity
 import com.moonhaven.earlysamurai.R.*
 import com.moonhaven.earlysamurai.database.IdeaObject
 import com.moonhaven.earlysamurai.database.UserObject
+import com.moonhaven.earlysamurai.enums.AboutFragmentState
 import com.moonhaven.earlysamurai.enums.IdeaStatus
+import com.moonhaven.earlysamurai.ui.custom.CustomInfoCard
 import com.moonhaven.earlysamurai.ui.splash.SplashActivity
 import com.moonhaven.earlysamurai.viewmodels.IdeasViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 // Logic class for the user fragment
@@ -27,20 +29,25 @@ class AboutFragment:Fragment() {
     // Setup values for the view model, user object, arbitrary value for sold ideas and all views
     private lateinit var viewModel:IdeasViewModel
 
+    private var currentState:AboutFragmentState = AboutFragmentState.Info
+
     private var user: UserObject? = null
     private var soldIdeas:Int = 0
 
-    private lateinit var aboutTitleTextView:TextView
+    private lateinit var aboutTitle:TextView
     private lateinit var profileImageView:ImageView
     private lateinit var credibilityTextView: TextView
-    private lateinit var userInfoTextView: TextView
-    private lateinit var ideasSoldInfoTextView: TextView
-    private lateinit var ideasCategoryTextView: TextView
-    private lateinit var ideasAvailableTextView: TextView
-    private lateinit var quoteTextView: TextView
+    private lateinit var userInfo: CustomInfoCard
+    private lateinit var ideasSoldInfo: CustomInfoCard
+    private lateinit var ideasCategory: CustomInfoCard
+    private lateinit var ideasAvailable: CustomInfoCard
+    private lateinit var quote: CustomInfoCard
 
     private lateinit var miniPitchButton: Button
     private lateinit var bookButton: Button
+    private lateinit var bookButton2:Button
+
+    private lateinit var miniPitchTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,17 +63,20 @@ class AboutFragment:Fragment() {
         user = arguments?.getParcelable("user")
 
         // Initialize views
-        aboutTitleTextView = root.about_user_text_view
+        aboutTitle = root.about_user_text_view
         profileImageView = root.profile_picture
         credibilityTextView = root.credibility_text_view
-        userInfoTextView = root.user_info_text_view
-        ideasSoldInfoTextView = root.ideas_sold_info_textView
-        ideasCategoryTextView = root.ideas_category_textView
-        ideasAvailableTextView = root.ideas_available_textView
-        quoteTextView = root.quote_textView
+        userInfo = CustomInfoCard(root.user_info)
+        ideasSoldInfo = CustomInfoCard(root.ideas_sold_info)
+        ideasCategory = CustomInfoCard(root.ideas_category_info)
+        ideasAvailable = CustomInfoCard(root.ideas_available_info)
+        quote = CustomInfoCard(root.quote_info)
 
         miniPitchButton = root.mini_pitch_button
         bookButton = root.book_meeting_button
+        bookButton2 = root.book_meeting_button2
+
+        miniPitchTextView = root.mini_pitch
 
         // Return the fragment view
         return root
@@ -92,12 +102,14 @@ class AboutFragment:Fragment() {
     // Set click listeners on mini pitch and book meeting buttons
     private fun setClickListeners(){
         miniPitchButton.setOnClickListener{
-            Log.d("FOO", "Pressed the 'see mini pitch button'")
+            onStateChanged(currentState)
         }
 
         bookButton.setOnClickListener {
-            Log.d("FOO", "Pressed the 'book meeting button'")
-//            (activity as MainActivity).startNewActivity(MeetingActivity())
+            (activity as MainActivity).startNewActivity(SplashActivity())
+        }
+
+        bookButton2.setOnClickListener {
             (activity as MainActivity).startNewActivity(SplashActivity())
         }
     }
@@ -115,12 +127,12 @@ class AboutFragment:Fragment() {
     // Function to set the values of views with information from the user
     @SuppressLint("SetTextI18n")
     private fun fillOutUserInformation(){
-        aboutTitleTextView.text = "${getString(string.about_user)} ${user?.getFirstName()}"
+        aboutTitle.text = "${getString(string.about_user)} ${user?.getFirstName()}"
         credibilityTextView.text = "${getString(string.credibility_user)} ${user?.getCredibility()}"
-        userInfoTextView.text = "${getString(string.name_user)} ${user?.getFirstName()}"
-        ideasSoldInfoTextView.text = "${getString(string.sold_user_start)} $soldIdeas ${getString(string.ideas_user)}"
+        userInfo.setInfoText("${getString(string.name_user)} ${user?.getFirstName()}")
+        ideasSoldInfo.setInfoText("${getString(string.sold_user_start)} $soldIdeas ${getString(string.ideas_user)}")
 
-        // loop in case we have more than one category
+//         loop in case we have more than one category
         var categories:String = ""
         user?.let {
             var i = 0
@@ -131,9 +143,13 @@ class AboutFragment:Fragment() {
                 i++
             }
         }
-        ideasCategoryTextView.text = "$categories ${getString(string.ideas_user)}"
-        ideasAvailableTextView.text = "${getString(string.ideas_available_start)} ${viewModel.userIdeasLiveData.value?.size} ${getString(string.ideas_user)} ${getString(string.ideas_available_end)}"
-        quoteTextView.text = user?.getQuote()
+        ideasCategory.setInfoText("$categories ${getString(string.ideas_user)}")
+        ideasAvailable.setInfoText("${getString(string.ideas_available_start)} ${viewModel.userIdeasLiveData.value?.size} ${getString(string.ideas_user)} ${getString(string.ideas_available_end)}")
+
+        user?.let {
+            if(it.getQuote() != null) quote.setInfoText(it.getQuote().toString())
+            else quote.setVisibility(View.GONE)
+        }
     }
 
     // Function to get the number of sold ideas by the user
@@ -143,5 +159,42 @@ class AboutFragment:Fragment() {
             if(idea.getStatus() == IdeaStatus.Sold) count ++
         }
         return count
+    }
+
+    private fun onStateChanged(state:AboutFragmentState){
+        val infoViews = listOf(userInfo, ideasSoldInfo,ideasCategory, ideasAvailable,quote)
+
+        currentState = if(state == AboutFragmentState.Info) AboutFragmentState.Pitch
+        else AboutFragmentState.Info
+
+        when (currentState){
+            AboutFragmentState.Pitch -> {
+                for(view in infoViews){
+                    view.setVisibility(View.GONE)
+                }
+                credibilityTextView.visibility = View.GONE
+                aboutTitle.text = getString(string.pitch)
+                miniPitchButton.visibility = View.GONE
+                bookButton.visibility = View.GONE
+                bookButton2.visibility = View.VISIBLE
+
+                miniPitchTextView.visibility = View.VISIBLE
+                miniPitchTextView.text = user?.getPitch()
+
+                (activity as MainActivity).setOtherBackArrowFunction {
+                    onStateChanged(currentState)
+                }
+            }
+            AboutFragmentState.Info -> {
+                for (view in infoViews) view.setVisibility(View.VISIBLE)
+                credibilityTextView.visibility = View.VISIBLE
+                aboutTitle.text = "${getString(string.about_user)} ${user?.getFirstName()}"
+                miniPitchButton.visibility = View.VISIBLE
+                bookButton.visibility = View.VISIBLE
+                bookButton2.visibility = View.GONE
+                miniPitchTextView.visibility = View.GONE
+                (activity as MainActivity).setRegularHeaderBackArrowFunction()
+            }
+        }
     }
 }

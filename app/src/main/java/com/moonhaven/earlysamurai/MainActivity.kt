@@ -1,22 +1,15 @@
 package com.moonhaven.earlysamurai
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.moonhaven.earlysamurai.database.AppDatabase
-import com.moonhaven.earlysamurai.database.IdeaDAO
-import com.moonhaven.earlysamurai.database.UserDAO
 import com.moonhaven.earlysamurai.mockdata.MockData
 import com.moonhaven.earlysamurai.ui.custom.CustomHeaderBar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         //Initialize the header bar and set correct logo and the function for back arrow
         headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
         setCorrectLogo("HOME")
-        setHeaderBackArrowFunction()
+        setRegularHeaderBackArrowFunction()
 
         //Initialize the database and mock data class, then populate database
         database = AppDatabase.getDatabase(this@MainActivity)
@@ -77,9 +70,15 @@ class MainActivity : AppCompatActivity() {
         headerBar.hideBackArrow()
     }
 
-    fun setHeaderBackArrowFunction(){
+    fun setRegularHeaderBackArrowFunction(){
         headerBar.runWhenBackPressed {
             onBackPressed()
+        }
+    }
+
+    fun setOtherBackArrowFunction(onClick: () -> Unit){
+        headerBar.runWhenBackPressed {
+            onClick()
         }
     }
 

@@ -15,6 +15,7 @@ class CustomInfoCard(private val view:View){
         infoTextView.text = textToSet
     }
 
+    // Function to set the visibility of cards
     fun setVisibility(visibility:Int){
         view.visibility = visibility
     }

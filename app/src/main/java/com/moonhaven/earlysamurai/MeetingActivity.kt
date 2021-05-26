@@ -3,6 +3,7 @@ package com.moonhaven.earlysamurai
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -32,10 +33,14 @@ class MeetingActivity:AppCompatActivity() {
     private lateinit var showCameraButton:ImageView
     private lateinit var hideCameraButton: ImageView
 
+    private var hasPermissions:Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_meeting)
+
+        hasPermissions = allPermissionsGranted()
 
         supportActionBar?.hide()
 
@@ -47,11 +52,12 @@ class MeetingActivity:AppCompatActivity() {
         setCorrectLogo()
         setClickListeners()
 
-        cameraPreview = CameraPreview()
+        cameraPreview = CameraPreview(this)
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+
         if (allPermissionsGranted()) {
-            cameraPreview.startCamera(this, current_user_camera_preview, this)
+            cameraPreview.getCameraProviderAndStartCamera(current_user_camera_preview, this)
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -66,11 +72,13 @@ class MeetingActivity:AppCompatActivity() {
 
     private fun setClickListeners(){
         hideCameraButton.setOnClickListener {
+            cameraPreview.stopCamera()
             current_user_camera_preview.visibility = View.GONE
             current_user_profile_picture.visibility = View.VISIBLE
         }
 
         showCameraButton.setOnClickListener{
+            cameraPreview.startCamera(current_user_camera_preview,this)
             current_user_profile_picture.visibility = View.GONE
             current_user_camera_preview.visibility = View.VISIBLE
         }
@@ -91,7 +99,7 @@ class MeetingActivity:AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                cameraPreview.startCamera(this,current_user_camera_preview,this)
+                cameraPreview.startCamera(current_user_camera_preview,this)
             } else {
                 Toast.makeText(this,
                     "Permissions not granted by the user.",

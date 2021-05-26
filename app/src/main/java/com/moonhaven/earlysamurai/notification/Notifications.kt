@@ -10,12 +10,16 @@ import androidx.annotation.RequiresApi
 
 class Notifications(private val notificationManager: NotificationManager) {
 
+    // Function to create a notification channel
     fun createNotificationChannel(id:String, name:String, description:String){
 
+        // Check if the build version is correct
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Set the importance of the notification and the channel
             val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(id,name,importance)
 
+            // Set some extra things for the channel
             channel.description = description
             channel.enableLights(true)
             channel.lightColor = Color.RED
@@ -25,13 +29,18 @@ class Notifications(private val notificationManager: NotificationManager) {
         }
     }
 
+    // Function to send notification
+    // Need to require correct build version
     @RequiresApi(Build.VERSION_CODES.O)
     fun sendNotification(context: Context, titleText:String, contentText:String){
 
+        // Set a notification id
         val notificationId = 101
 
+        // Choose an id for the channel
         val channelId = "com.moonhaven.earlysamurai.foo"
 
+        // Create the notification
         val notification = Notification.Builder(context,channelId)
             .setContentTitle(titleText)
             .setContentText(contentText)
@@ -39,6 +48,7 @@ class Notifications(private val notificationManager: NotificationManager) {
             .setChannelId(channelId)
             .build()
 
+        // Send the notification
         notificationManager.notify(notificationId, notification)
 
     }

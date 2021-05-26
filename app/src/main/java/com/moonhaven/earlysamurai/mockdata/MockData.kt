@@ -12,19 +12,21 @@ import kotlinx.coroutines.launch
 
 class MockData{
 
-    private val loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id sagittis nulla. Ut porta placerat velit, quis malesuada nisi dapibus sit amet. In aliquet ornare sapien, non dignissim ipsum. Vivamus sed sem odio. Proin ultrices, elit non tempor dictum, purus diam maximus turpis, ac congue orci velit non nisl. Maecenas mollis ut risus eget sodales."
+    // Some mock data to use
     private val loremIpsumShort = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id sagittis nulla."
     private val quote1 = "It's fucked"
 
+    // Some mock users
     private val user1 = UserObject("asdf1", "FirstName1","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment, Category.Finance, Category.Medicine),quote1,loremIpsumShort)
     private val user2 = UserObject("asdf2", "FirstName2","LastName", UserType.Entrepreneur, City.Oslo, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
     private val user3 = UserObject("asdf3", "FirstName3","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
     private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsumShort)
     private val user5 = UserObject("asdf5", "FirstName5","LastName", UserType.Investor, City.Bergen, 42)
 
+    // List of the users
     private val userList = mutableListOf(user1,user2,user3,user4,user5)
 
-
+    // Some mock ideas
     private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea2 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea3 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
@@ -32,6 +34,7 @@ class MockData{
     private val idea5 = IdeaObject("asdf3",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea6 = IdeaObject("asdf4",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
 
+    // List of the ideas
     private val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6)
 
     //Database initialization with mock data

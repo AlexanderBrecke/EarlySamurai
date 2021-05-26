@@ -10,22 +10,14 @@ import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 
 class IdeasViewModel:ViewModel() {
+    // Setup the idea repository
     private val ideaRepository = IdeaRepository()
-    private val _ideasLiveData = MutableLiveData<List<IdeaObject>>()
-    val ideasLiveData = _ideasLiveData
 
+    // Setup live data for the user ideas
     private val _currentUserIdeasLiveData = MutableLiveData<List<IdeaObject>>()
     val userIdeasLiveData = _currentUserIdeasLiveData
 
-    fun getIdeas(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val allIdeas = ideaRepository.getAllIdeasFromDatabase()
-            if(_ideasLiveData.value != allIdeas){
-                _ideasLiveData.postValue(allIdeas)
-            }
-        }
-    }
-
+    // Function to get all ideas from a user
     fun getUserIdeas(userId:String){
         CoroutineScope(Dispatchers.IO).launch {
             val allUserIdeas = ideaRepository.getAllUserIdeas(userId)

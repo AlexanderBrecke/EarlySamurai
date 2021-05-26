@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     // --- ---
 
+    // Function to start a new activity
     fun startNewActivity(activityToStart:AppCompatActivity){
         val intent = Intent(this, activityToStart::class.java)
         startActivity(intent)

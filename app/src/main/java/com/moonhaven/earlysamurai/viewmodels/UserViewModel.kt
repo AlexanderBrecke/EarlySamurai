@@ -11,10 +11,12 @@ import kotlinx.coroutines.launch
 
 class UserViewModel : ViewModel() {
 
+    // Setup the user repository and live data for all users
     private val userRepository = UserRepository()
     private val _usersLiveData = MutableLiveData<List<UserObject>>()
     val usersLiveData = _usersLiveData
 
+    // Function to get all the users from the repository
     fun getUsers(){
         CoroutineScope(Dispatchers.IO).launch {
             val allUsers = userRepository.getAllUsersFromDatabase()

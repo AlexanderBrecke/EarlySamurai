@@ -21,13 +21,12 @@ class MockData{
     private val user2 = UserObject("asdf2", "FirstName2","LastName", UserType.Entrepreneur, City.Oslo, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
     private val user3 = UserObject("asdf3", "FirstName3","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
     private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsumShort)
-    private val user5 = UserObject("asdf5", "FirstName5","LastName", UserType.Investor, City.Bergen, 42)
 
     // List of the users
-    private val userList = mutableListOf(user1,user2,user3,user4,user5)
+    private val userList = mutableListOf(user1,user2,user3,user4)
 
     // Some mock ideas
-    private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.Sold,loremIpsumShort)
     private val idea2 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea3 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
     private val idea4 = IdeaObject("asdf2",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
@@ -41,11 +40,9 @@ class MockData{
     fun populateDatabase(database:AppDatabase,populate:Boolean){
         CoroutineScope(Dispatchers.IO).launch {
 
-            //Initialize DAOs
             val userDao = database.userDAO()
             val ideaDAO = database.ideaDAO()
 
-            // Values to not have to write too many times
             val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
             val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
 

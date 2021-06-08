@@ -1,12 +1,12 @@
 package com.moonhaven.earlysamurai.ui.about
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,10 +19,8 @@ import com.moonhaven.earlysamurai.database.UserObject
 import com.moonhaven.earlysamurai.enums.AboutFragmentState
 import com.moonhaven.earlysamurai.enums.IdeaStatus
 import com.moonhaven.earlysamurai.ui.custom.CustomInfoCard
-import com.moonhaven.earlysamurai.ui.splash.SplashActivity
+import com.moonhaven.earlysamurai.utilities.Utils
 import com.moonhaven.earlysamurai.viewmodels.IdeasViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 // Logic class for the user fragment
@@ -35,6 +33,9 @@ class AboutFragment:Fragment() {
 
     private var user: UserObject? = null
     private var soldIdeas:Int = 0
+    private var hasQuote = false
+
+    private lateinit var loader:ProgressBar
 
     private lateinit var aboutTitle:TextView
     private lateinit var profileImageView:ImageView
@@ -51,23 +52,22 @@ class AboutFragment:Fragment() {
 
     private lateinit var miniPitchTextView: TextView
 
+
+    // Initialize all values above
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        // Initialize the view model and the fragment view
         viewModel = ViewModelProvider(this).get(IdeasViewModel::class.java)
-        val root = inflater.inflate(layout.fragment_about, container, false)
-
-        // Get the user object from the bundle
+        currentState = AboutFragmentState.Info
         user = arguments?.getParcelable("user")
 
-        // Set the current state
-        currentState = AboutFragmentState.Info
+        val root = inflater.inflate(layout.fragment_about, container, false)
 
-        // Initialize views
+        loader = root.loader
+
         aboutTitle = root.about_user_text_view
         profileImageView = root.profile_picture
         credibilityTextView = root.credibility_text_view
@@ -83,25 +83,46 @@ class AboutFragment:Fragment() {
 
         miniPitchTextView = root.mini_pitch
 
-        // Return the fragment view
         return root
     }
 
+    // Show back arrow, set click listeners, start loader
+    // Make sure we have a user, bind observers to view model and fetch information
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Show the back arrow in the header bar
         (activity as MainActivity).showBackArrowInHeaderBar()
-
-        // Set click listeners for buttons
         setClickListeners()
+        isLoading(true)
 
-        // Make sure we have a user object
         user?.let {
-            // Bind the observers for view models and fetch information
             bindObservers()
             viewModel.getUserIdeas(it.getId())
         }
+    }
+
+    // Function to show/hide all views and opposite for loader
+    private fun isLoading(loading:Boolean){
+
+        val visibility:Int
+
+        val regularViews = listOf(aboutTitle,profileImageView,credibilityTextView, miniPitchButton, bookButton)
+        val customCardViews = listOf(userInfo,ideasSoldInfo,ideasCategory,ideasAvailable)
+
+        if(loading){
+            loader.visibility = View.VISIBLE
+            visibility = View.GONE
+        }
+        else{
+            loader.visibility = View.GONE
+            visibility = View.VISIBLE
+        }
+
+        for(view in regularViews) view.visibility = visibility
+        for(view in customCardViews) view.setVisibility(visibility)
+
+        if(loading) quote.setVisibility(visibility)
+        else if(!loading && hasQuote) quote.setVisibility(visibility)
     }
 
     // Set click listeners on mini pitch and book meeting buttons
@@ -109,11 +130,9 @@ class AboutFragment:Fragment() {
         miniPitchButton.setOnClickListener{
             onStateChanged(currentState)
         }
-
         bookButton.setOnClickListener {
             (activity as MainActivity).findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_booking)
         }
-
         bookButton2.setOnClickListener {
             (activity as MainActivity).findNavController(R.id.nav_host_fragment).navigate(R.id.navigation_booking)
             onStateChanged(currentState)
@@ -121,86 +140,81 @@ class AboutFragment:Fragment() {
     }
 
     // Bind the view model observers
+    // Observe the live data for user ideas
+    // Set the value for how many sold ideas the user have and fill information to views
     private fun bindObservers(){
-        // Observe the live data for user ideas
         viewModel.userIdeasLiveData.observe(viewLifecycleOwner, {
-            // set the value for how many sold ideas the user have, then fill information to the views
-            soldIdeas = getSoldIdeasCount(it)
+            soldIdeas = Utils.getStatusIdeasCount(it, IdeaStatus.Sold)
             fillOutUserInformation()
         })
     }
 
     // Function to set the values of views with information from the user
-    @SuppressLint("SetTextI18n")
+    // Start with loader
+    // Create values for all info
+    // Fill info into the views
     private fun fillOutUserInformation(){
-        aboutTitle.text = "${getString(string.about_user)} ${user?.getFirstName()}"
-        credibilityTextView.text = "${getString(string.credibility_user)} ${user?.getCredibility()}"
-        userInfo.setInfoText("${getString(string.name_user)} ${user?.getFirstName()}")
-        ideasSoldInfo.setInfoText("${getString(string.sold_user_start)} $soldIdeas ${getString(string.ideas_user)}")
+        isLoading(true)
 
-//         loop in case we have more than one category
-        var categories:String = ""
+        val aboutTitleText = "${getString(string.about_user)} ${user?.getFirstName()}"
+        val credibilityText = "${getString(string.credibility_user)} ${user?.getCredibility()}"
+        val userInfoText = "${getString(string.name_user)} ${user?.getFirstName()}"
+        val ideasSoldText = "${getString(string.sold_user_start)} $soldIdeas ${getString(string.ideas_user)}"
+        var categories = ""
+        var quoteText = ""
         user?.let {
-            var i = 0
-            val loopSize = it.getCategories().size
-            while(i < loopSize){
-                categories += it.getCategories()[i]
-                if(i < loopSize-1) categories += ", "
-                i++
+            categories = Utils.getCategoriesString(it.getCategories())
+
+            if(it.getQuote() != null){
+                hasQuote = true
+                quoteText = it.getQuote().toString()
             }
         }
-        ideasCategory.setInfoText("$categories ${getString(string.ideas_user)}")
-        ideasAvailable.setInfoText("${getString(string.ideas_available_start)} ${viewModel.userIdeasLiveData.value?.size} ${getString(string.ideas_user)} ${getString(string.ideas_available_end)}")
+        val categoryText = "$categories ${getString(string.ideas_user)}"
+        val availableIdeas = Utils.getStatusIdeasCount(viewModel.userIdeasLiveData.value as List<IdeaObject>,IdeaStatus.ForSale)
+        val ideasAvailableText = "${getString(string.ideas_available_start)} $availableIdeas ${getString(string.ideas_user)} ${getString(string.ideas_available_end)}"
 
-        user?.let {
-            if(it.getQuote() != null) quote.setInfoText(it.getQuote().toString())
-            else quote.setVisibility(View.GONE)
-        }
+
+        aboutTitle.text = aboutTitleText
+        credibilityTextView.text = credibilityText
+        userInfo.setInfoText(userInfoText)
+        ideasSoldInfo.setInfoText(ideasSoldText)
+        ideasCategory.setInfoText(categoryText)
+        ideasAvailable.setInfoText(ideasAvailableText)
+        quote.setInfoText(quoteText)
+
+        isLoading(false)
     }
 
-    // Function to get the number of sold ideas by the user
-    private fun getSoldIdeasCount(allIdeas:List<IdeaObject>):Int{
-        var count = 0
-        for(idea in allIdeas){
-            if(idea.getStatus() == IdeaStatus.Sold) count ++
-        }
-        return count
-    }
 
     private fun onStateChanged(state:AboutFragmentState){
-        val infoViews = listOf(userInfo, ideasSoldInfo,ideasCategory, ideasAvailable,quote)
+        val customCardInfoViews = listOf(userInfo, ideasSoldInfo,ideasCategory, ideasAvailable,quote)
+        val regularInfoViews = listOf(credibilityTextView, miniPitchButton,bookButton)
+        val pitchViews = listOf(bookButton2, miniPitchTextView)
 
         currentState = if(state == AboutFragmentState.Info) AboutFragmentState.Pitch
         else AboutFragmentState.Info
 
         when (currentState){
             AboutFragmentState.Pitch -> {
-                for(view in infoViews){
-                    view.setVisibility(View.GONE)
-                }
-                credibilityTextView.visibility = View.GONE
                 aboutTitle.text = getString(string.pitch)
-                miniPitchButton.visibility = View.GONE
-                bookButton.visibility = View.GONE
-                bookButton2.visibility = View.VISIBLE
-
-                miniPitchTextView.visibility = View.VISIBLE
                 miniPitchTextView.text = user?.getPitch()
-
+                for(view in customCardInfoViews) view.setVisibility(View.GONE)
+                for(view in regularInfoViews) view.visibility = View.GONE
+                for(view in pitchViews) view.visibility = View.VISIBLE
                 (activity as MainActivity).setOtherBackArrowFunction {
                     onStateChanged(currentState)
                 }
             }
             AboutFragmentState.Info -> {
-                for (view in infoViews) view.setVisibility(View.VISIBLE)
-                credibilityTextView.visibility = View.VISIBLE
                 aboutTitle.text = "${getString(string.about_user)} ${user?.getFirstName()}"
-                miniPitchButton.visibility = View.VISIBLE
-                bookButton.visibility = View.VISIBLE
-                bookButton2.visibility = View.GONE
-                miniPitchTextView.visibility = View.GONE
+                for (view in customCardInfoViews) view.setVisibility(View.VISIBLE)
+                for(view in regularInfoViews) view.visibility = View.VISIBLE
+                for(view in pitchViews) view.visibility = View.GONE
                 (activity as MainActivity).setRegularHeaderBackArrowFunction()
             }
         }
     }
+
+
 }

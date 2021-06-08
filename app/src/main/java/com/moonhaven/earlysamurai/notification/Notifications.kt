@@ -4,52 +4,48 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
+import com.moonhaven.earlysamurai.EarlySamuraiApplication
 
-class Notifications(private val notificationManager: NotificationManager) {
+object Notifications {
+    private var notificationManager: NotificationManager
+    private const val mainChannelId = "com.moonhaven.earlysamurai.main"
 
-    // Function to create a notification channel
-    fun createNotificationChannel(id:String, name:String, description:String){
+    init {
+        val context = EarlySamuraiApplication.application.applicationContext
+        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        createMainNotificationChannel()
+    }
 
-        // Check if the build version is correct
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Set the importance of the notification and the channel
-            val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(id,name,importance)
-
-            // Set some extra things for the channel
+    // Function to create main notification channel
+    private fun createMainNotificationChannel(){
+        val name = "Main"
+        val description = "Main notification channel"
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel =  NotificationChannel(mainChannelId,name,importance)
             channel.description = description
-            channel.enableLights(true)
-            channel.lightColor = Color.RED
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(100,200,300,400,500,400,300,200,400)
             notificationManager.createNotificationChannel(channel)
+
         }
     }
 
     // Function to send notification
-    // Need to require correct build version
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun sendNotification(context: Context, titleText:String, contentText:String){
+    fun sendNotification(titleText:String, contentText:String, notificationId:Int = 101, notificationChannelId: String = mainChannelId){
 
-        // Set a notification id
-        val notificationId = 101
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val context = EarlySamuraiApplication.application.applicationContext
 
-        // Choose an id for the channel
-        val channelId = "com.moonhaven.earlysamurai.foo"
-
-        // Create the notification
-        val notification = Notification.Builder(context,channelId)
-            .setContentTitle(titleText)
-            .setContentText(contentText)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setChannelId(channelId)
-            .build()
-
-        // Send the notification
-        notificationManager.notify(notificationId, notification)
+            val notification = Notification.Builder(context, notificationChannelId)
+                .setContentTitle(titleText)
+                .setContentText(contentText)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setChannelId(notificationChannelId)
+                .build()
+            notificationManager.notify(notificationId, notification)
+        }
 
     }
 

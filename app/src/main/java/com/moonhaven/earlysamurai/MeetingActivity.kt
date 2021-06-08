@@ -1,25 +1,19 @@
 package com.moonhaven.earlysamurai
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
-import com.google.common.util.concurrent.ListenableFuture
 import com.moonhaven.earlysamurai.ui.custom.CustomHeaderBar
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import com.moonhaven.earlysamurai.camera.CameraPreview
 import kotlinx.android.synthetic.main.activity_meeting.*
-import kotlinx.android.synthetic.main.activity_meeting.view.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -33,6 +27,8 @@ class MeetingActivity:AppCompatActivity() {
     private lateinit var showCameraButton:ImageView
     private lateinit var hideCameraButton: ImageView
 
+    private lateinit var goodByeButton: Button
+
     private var hasPermissions:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +39,12 @@ class MeetingActivity:AppCompatActivity() {
         hasPermissions = allPermissionsGranted()
 
         supportActionBar?.hide()
-
         headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
 
         showCameraButton = activate_camera_icon
         hideCameraButton = deactivate_camera_icon
+
+        goodByeButton = goodbye
 
         setCorrectLogo()
         setClickListeners()
@@ -57,17 +54,27 @@ class MeetingActivity:AppCompatActivity() {
 
 
         if (allPermissionsGranted()) {
-            cameraPreview.getCameraProviderAndStartCamera(current_user_camera_preview, this)
+            cameraPreview.getCameraProviderAndBindPreview(current_user_camera_preview, this)
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if(allPermissionsGranted()){
+            cameraPreview.bindPreview(current_user_camera_preview,this)
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+    }
+
+    override fun onBackPressed() {
+        goToMainActivity()
     }
 
     private fun setClickListeners(){
@@ -78,9 +85,13 @@ class MeetingActivity:AppCompatActivity() {
         }
 
         showCameraButton.setOnClickListener{
-            cameraPreview.startCamera(current_user_camera_preview,this)
+            cameraPreview.bindPreview(current_user_camera_preview,this)
             current_user_profile_picture.visibility = View.GONE
             current_user_camera_preview.visibility = View.VISIBLE
+        }
+
+        goodByeButton.setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -99,7 +110,7 @@ class MeetingActivity:AppCompatActivity() {
         IntArray) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                cameraPreview.startCamera(current_user_camera_preview,this)
+                cameraPreview.getCameraProviderAndBindPreview(current_user_camera_preview,this)
             } else {
                 Toast.makeText(this,
                     "Permissions not granted by the user.",
@@ -107,6 +118,17 @@ class MeetingActivity:AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun goToMainActivity(){
+        shutDownCamera()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun shutDownCamera(){
+        cameraPreview.stopCamera()
+        cameraExecutor.shutdown()
     }
 
     companion object {

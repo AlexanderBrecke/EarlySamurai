@@ -6,7 +6,6 @@ import com.moonhaven.earlysamurai.database.IdeaObject
 import com.moonhaven.earlysamurai.repositories.IdeaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 
 class IdeasViewModel:ViewModel() {

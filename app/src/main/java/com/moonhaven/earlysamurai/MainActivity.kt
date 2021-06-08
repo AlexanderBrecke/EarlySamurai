@@ -18,29 +18,28 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database:AppDatabase
     private lateinit var mockData:MockData
 
+    // Initialize bottom nav bar
+    // Set tint of nav bar to null because we use custom icons
+    // Setup nav controller
+    // Hide action bar and use custom header bar
+    // Set correct logo
+    // Initialize database and mock data class
+    // Populate database
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
-        // set the tint of the nav view to null, as we use custom icons for the navigation menu
         navView.itemIconTintList = null
-
-        // setup nav controller
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
-        // Hide the action bar as we use custom logo bar
         supportActionBar?.hide()
-
-        //Initialize the header bar and set correct logo and the function for back arrow
         headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
         setCorrectLogo("HOME")
         setRegularHeaderBackArrowFunction()
 
-        //Initialize the database and mock data class, then populate database
         database = AppDatabase.getDatabase(this@MainActivity)
 
         mockData = MockData()

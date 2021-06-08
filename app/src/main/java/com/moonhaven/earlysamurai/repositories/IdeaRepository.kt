@@ -3,7 +3,6 @@ package com.moonhaven.earlysamurai.repositories
 import com.moonhaven.earlysamurai.EarlySamuraiApplication
 import com.moonhaven.earlysamurai.database.AppDatabase
 import com.moonhaven.earlysamurai.database.IdeaObject
-import com.moonhaven.earlysamurai.database.UserObject
 
 // Logic class for idea repository
 class IdeaRepository {

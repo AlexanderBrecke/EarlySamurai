@@ -7,35 +7,31 @@ import com.moonhaven.earlysamurai.enums.Category
 class Converters {
 
     // Function to change a list of enums to a string
+    // Loop through enums in the list and add the name of the enum to a string plus a comma to separate
+    // Return the string
     @TypeConverter
     fun toCategoriesString(values:MutableList<Category>):String{
-        // Initialize empty string
         var enumString = ""
 
-        // Loop through the enums in the list
         for(enum in values){
-            // Add the name of the enum to the string plus a comma to separate
             enumString += enum.name + ","
         }
-        // Return the string
         return enumString
     }
 
     // Function to change a string back to list of enums
+    // Split to get a list of strings
+    // Loop through the strings and check if it is not empty as this can happen
+    // if it isn't, add the category with the value of the string to a list of categories
+    // return list of categories
     @TypeConverter
     fun fromCategoriesString(string: String):List<Category>{
-        // Get a list of strings by splitting the input string,
         val categoryStrings: List<String> = string.split(",")
-
-        // Initialize an empty list of category enums
         var categoryList:MutableList<Category> = mutableListOf()
 
-        // Loop through the list of strings
         for(category in categoryStrings){
-            // If the string is not an empty string, add the category with the value of the string to the list of categories
             if(category != "") categoryList.add(Category.valueOf(category))
         }
-        // Return the list of category enums
         return categoryList
     }
 

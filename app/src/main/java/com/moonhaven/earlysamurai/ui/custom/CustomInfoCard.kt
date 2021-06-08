@@ -1,6 +1,5 @@
 package com.moonhaven.earlysamurai.ui.custom
 
-import android.opengl.Visibility
 import android.view.View
 import android.widget.TextView
 import kotlinx.android.synthetic.main.custom_about_info_card.view.*

@@ -53,7 +53,7 @@ class AboutFragment:Fragment() {
     private lateinit var miniPitchTextView: TextView
 
 
-    // Initialize all values above
+    // Initialize values above
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -153,6 +153,7 @@ class AboutFragment:Fragment() {
     // Start with loader
     // Create values for all info
     // Fill info into the views
+    // Lastly stop loading
     private fun fillOutUserInformation(){
         isLoading(true)
 
@@ -187,6 +188,10 @@ class AboutFragment:Fragment() {
     }
 
 
+    // Function to change state of the fragment
+    // Setup list of all views in fragment
+    // change the state of the fragment
+    // Then set views to be either visible or hidden depending on which state fragment is in
     private fun onStateChanged(state:AboutFragmentState){
         val customCardInfoViews = listOf(userInfo, ideasSoldInfo,ideasCategory, ideasAvailable,quote)
         val regularInfoViews = listOf(credibilityTextView, miniPitchButton,bookButton)

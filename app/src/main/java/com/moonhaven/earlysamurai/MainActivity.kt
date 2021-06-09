@@ -61,12 +61,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showBackArrowInHeaderBar(){
-        headerBar.showBackArrow()
+    private fun hideBackArrowInHeaderBar(){
+        headerBar.hideBackArrow()
     }
 
-    fun hideBackArrowInHeaderBar(){
-        headerBar.hideBackArrow()
+    fun showBackArrowInHeaderBar(){
+        headerBar.showBackArrow()
     }
 
     fun setRegularHeaderBackArrowFunction(){

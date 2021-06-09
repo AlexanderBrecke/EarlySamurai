@@ -94,20 +94,6 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/goodbye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginBottom="@dimen/margin_big"
-        android:text="@string/thank_you"
-        android:paddingLeft="@dimen/margin_tiny"
-        android:paddingRight="@dimen/margin_tiny"
-        android:backgroundTint="@null"
-        android:background="@drawable/bordered_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ImageView
         android:id="@+id/activate_sound_icon"
         android:layout_width="@dimen/icon_size"
@@ -171,6 +157,20 @@
         android:layout_marginTop="@dimen/margin_small"
         android:layout_marginRight="@dimen/margin_tiny"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/goodbye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_big"
+        android:text="@string/thank_you"
+        android:paddingLeft="@dimen/margin_tiny"
+        android:paddingRight="@dimen/margin_tiny"
+        android:backgroundTint="@null"
+        android:background="@drawable/bordered_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

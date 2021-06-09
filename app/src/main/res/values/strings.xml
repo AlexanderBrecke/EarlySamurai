@@ -47,4 +47,8 @@
     <!-- Mock text -->
     <string name="mock_fragment">This is a mock fragment</string>
 
+    <!-- Notification strings -->
+    <string name="notify_meeting">Meeting</string>
+    <string name="notify_starting">Your meeting is starting</string>
+
 </resources>

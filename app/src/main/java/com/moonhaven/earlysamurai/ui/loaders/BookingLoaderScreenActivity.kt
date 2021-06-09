@@ -6,7 +6,7 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.moonhaven.earlysamurai.MeetingActivity
 import com.moonhaven.earlysamurai.R
-import com.moonhaven.earlysamurai.notification.Notifications
+import com.moonhaven.earlysamurai.managers.notifications.CustomNotificationManager
 import com.moonhaven.earlysamurai.ui.custom.CustomHeaderBar
 
 class BookingLoaderScreenActivity:AppCompatActivity() {
@@ -26,7 +26,7 @@ class BookingLoaderScreenActivity:AppCompatActivity() {
         headerBar = CustomHeaderBar(findViewById(R.id.main_header_bar))
         setRightLogo()
 
-        Notifications.sendNotification("Meeting", "Your meeting is starting")
+        CustomNotificationManager.sendNotification(getString(R.string.notify_meeting), getString(R.string.notify_starting))
 
         Handler().postDelayed({
             intent = Intent(this, MeetingActivity::class.java)

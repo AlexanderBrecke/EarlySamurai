@@ -1,20 +1,14 @@
 package com.moonhaven.earlysamurai.mockdata
 
-import android.util.Log
 import com.moonhaven.earlysamurai.database.*
-import com.moonhaven.earlysamurai.enums.Category
-import com.moonhaven.earlysamurai.enums.City
-import com.moonhaven.earlysamurai.enums.IdeaStatus
-import com.moonhaven.earlysamurai.enums.UserType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.moonhaven.earlysamurai.enums.*
 
-class MockData{
+// Simply mock data
+object MockData{
 
-    // Some mock data to use
-    private val loremIpsumShort = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id sagittis nulla."
-    private val quote1 = "It's fucked"
+    // Some mock data to use for our users and ideas
+    private const val loremIpsumShort = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id sagittis nulla."
+    private const val quote1 = "It's fucked"
 
     // Some mock users
     private val user1 = UserObject("asdf1", "FirstName1","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment, Category.Finance, Category.Medicine),quote1,loremIpsumShort)
@@ -22,71 +16,19 @@ class MockData{
     private val user3 = UserObject("asdf3", "FirstName3","LastName", UserType.Entrepreneur, City.Bergen, 42, mutableListOf(Category.Environment),quote1,loremIpsumShort)
     private val user4 = UserObject("asdf4", "FirstName4","LastName", UserType.Entrepreneur, City.Trondheim, 42, mutableListOf(Category.Finance),quote1,loremIpsumShort)
 
-    // List of the users
-    private val userList = mutableListOf(user1,user2,user3,user4)
+    val userList = mutableListOf(user1,user2,user3,user4)
 
     // Some mock ideas
     private val idea1 = IdeaObject("asdf1",Category.Environment,IdeaStatus.Sold,loremIpsumShort)
-    private val idea2 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
-    private val idea3 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
-    private val idea4 = IdeaObject("asdf2",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
-    private val idea5 = IdeaObject("asdf3",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
-    private val idea6 = IdeaObject("asdf4",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea2 = IdeaObject("asdf1",Category.Finance,IdeaStatus.Sold,loremIpsumShort)
+    private val idea3 = IdeaObject("asdf1",Category.Medicine,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea4 = IdeaObject("asdf1",Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea5 = IdeaObject("asdf2",Category.Environment,IdeaStatus.Sold,loremIpsumShort)
+    private val idea6 = IdeaObject("asdf2",Category.Finance,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea7 = IdeaObject("asdf3", Category.Environment,IdeaStatus.ForSale,loremIpsumShort)
+    private val idea8 = IdeaObject("asdf4", Category.Environment,IdeaStatus.Sold,loremIpsumShort)
 
-    // List of the ideas
-    private val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6)
-
-    //Database initialization with mock data
-    fun populateDatabase(database:AppDatabase,populate:Boolean){
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val userDao = database.userDAO()
-            val ideaDAO = database.ideaDAO()
-
-            val emptyUserDb = userDao.getAllUsers().isNullOrEmpty()
-            val emptyIdeaDb = ideaDAO.getAllIdeas().isNullOrEmpty()
-
-            //If we are supposed to populate the database
-            if(populate){
-                initializeUserMockData(userDao)
-                initializeIdeasMockData(ideaDAO)
-            } else {
-                // Check, if not empty wipe database
-                if(!emptyUserDb || !emptyIdeaDb) Log.d("FOO", "Wiping the database..")
-                if(!emptyUserDb) userDao.deleteAllUsers()
-                if(!emptyIdeaDb) ideaDAO.deleteAllIdeas()
-            }
-
-            // Logs for information
-            if(userDao.getAllUsers().isNullOrEmpty()) Log.d("FOO", "Currently 0 users in database")
-            else Log.d("FOO", "Currently ${userDao.getAllUsers()?.size} users in database \n ${userDao.getAllUsers()}")
-
-            if(ideaDAO.getAllIdeas().isNullOrEmpty()) Log.d("FOO", "Currently 0 ideas in database")
-            else Log.d("FOO", "Currently ${ideaDAO.getAllIdeas()?.size} ideas in database \n ${ideaDAO.getAllIdeas()}")
-        }
-    }
-
-    // Function to initialize user mock data
-    private fun initializeUserMockData(userDao: UserDAO){
-        if(userDao.getAllUsers().isNullOrEmpty()){
-            Log.d("FOO","Populating users..")
-            for(user in userList) {
-                userDao.insertUser(user)
-            }
-            Log.d("FOO", "Added: '${userList.size}' users to the database")
-        }
-    }
-
-    // Function to initialize idea mock data
-    private fun initializeIdeasMockData(ideaDao: IdeaDAO){
-        if(ideaDao.getAllIdeas().isNullOrEmpty()){
-            Log.d("FOO","Populating ideas..")
-            for(idea in ideaList){
-                ideaDao.insertIdea(idea)
-            }
-            Log.d("FOO", "Added: '${ideaList.size}' ideas to the database")
-        }
-    }
+    val ideaList = mutableListOf(idea1,idea2,idea3,idea4, idea5,idea6,idea7,idea8)
 
 }
 

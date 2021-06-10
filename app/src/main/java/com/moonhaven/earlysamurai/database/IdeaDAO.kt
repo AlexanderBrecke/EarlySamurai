@@ -7,6 +7,9 @@ import androidx.room.*
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertIdea(ideaToInsert:IdeaObject)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultipleIdeas(ideaList:List<IdeaObject>)
+
     @Delete
     fun deleteIdea(ideaToDelete:IdeaObject)
 

@@ -6,10 +6,11 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import com.moonhaven.earlysamurai.EarlySamuraiApplication
+import com.moonhaven.earlysamurai.mainNotificationChannelId
 
 object CustomNotificationManager {
     private var notificationManager: NotificationManager
-    private const val mainChannelId = "com.moonhaven.earlysamurai.main"
+
 
     init {
         val context = EarlySamuraiApplication.application.applicationContext
@@ -23,7 +24,7 @@ object CustomNotificationManager {
         val description = "Main notification channel"
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel =  NotificationChannel(mainChannelId,name,importance)
+            val channel =  NotificationChannel(mainNotificationChannelId,name,importance)
             channel.description = description
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(100,200,300,400,500,400,300,200,400)
@@ -33,7 +34,7 @@ object CustomNotificationManager {
     }
 
     // Function to send notification
-    fun sendNotification(titleText:String, contentText:String, notificationId:Int = 101, notificationChannelId: String = mainChannelId){
+    fun sendNotification(titleText:String, contentText:String, notificationId:Int = 101, notificationChannelId: String = mainNotificationChannelId){
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val context = EarlySamuraiApplication.application.applicationContext

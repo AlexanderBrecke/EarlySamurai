@@ -23,6 +23,7 @@ object CustomRequestManager {
             context, it) == PackageManager.PERMISSION_GRANTED
     }
 
+    // Function to request permission
     fun requestPermission(requestingActivity:Activity){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when{
@@ -32,6 +33,7 @@ object CustomRequestManager {
         }
     }
 
+    // Function to actually send the request
     private fun sendPermissionRequest(requestingActivity: Activity){
         ActivityCompat.requestPermissions(requestingActivity,
             REQUIRED_PERMISSIONS,
@@ -39,6 +41,7 @@ object CustomRequestManager {
         )
     }
 
+    // Function to show a dialogue if permission is needed but has been denied
     private fun showDialogue(requestingActivity: Activity){
         val builder = AlertDialog.Builder(requestingActivity)
         builder.apply {

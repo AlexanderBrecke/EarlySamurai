@@ -7,6 +7,9 @@ import androidx.room.*
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertUser(userToInsert:UserObject)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertMultipleUsers(userList:List<UserObject>)
+
     @Delete
     fun deleteUser(userToDelete:UserObject)
 

@@ -3,6 +3,9 @@ package com.moonhaven.earlysamurai.utilities
 import com.moonhaven.earlysamurai.database.IdeaObject
 import com.moonhaven.earlysamurai.enums.Category
 import com.moonhaven.earlysamurai.enums.IdeaStatus
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object Utils {
 
@@ -22,5 +25,12 @@ object Utils {
         var count = 0
         for(idea in allIdeas) if(idea.getStatus() == statusToLookFor) count++
         return count
+    }
+
+    // Function to run another function as a coroutine on dispatchers.io
+    fun runFunctionAsCoroutine(functionToRun:()->Unit){
+        CoroutineScope(Dispatchers.IO).launch {
+            functionToRun()
+        }
     }
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.moonhaven.earlysamurai.database.AppDatabase
+import com.moonhaven.earlysamurai.managers.data.CustomDataManager
 import com.moonhaven.earlysamurai.mockdata.MockData
 import com.moonhaven.earlysamurai.ui.custom.CustomHeaderBar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     // Setup nav controller
     // Hide action bar and use custom header bar
     // Set correct logo
-    // Initialize database and mock data class
+    // Initialize database
     // Populate database
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         database = AppDatabase.getDatabase(this@MainActivity)
 
-        mockData = MockData()
-        mockData.populateDatabase(database,true)
+        CustomDataManager.populateDatabase(true)
 
     }
 
